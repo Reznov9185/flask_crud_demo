@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 import sys
 import mysql.connector
 from mysql.connector import errorcode
@@ -14,7 +14,7 @@ def db_connect():
                                     password='test_dbms1',
                                     database='test')
         cursor = cnx.cursor(buffered=True)
-        return "Hello, Earthlings... Database connected successfully. :P See: " + str(cursor)  
+        return render_template("index.html")
     except mysql.connector.Error as err:
         if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
             return "Something is wrong with your user name or password"
