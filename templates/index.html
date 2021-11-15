@@ -1,11 +1,37 @@
 {% extends "base.html" %}
-{% block title %}Welcome{% endblock %}
+{% block title %}ABC Media{% endblock %}
 {% block content %}
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-        <h1>Hello, Earthlings...</h1>
-        <p> Database connected successfully. :P</p>
+        <div class="login-form mx-5">
+          <form action="/" method="post">
+              <h2 class="text-center p-3">Database Log in</h2>
+              {% if msg is defined %}
+                <div class="alert alert-danger" role="alert">
+                  {{ msg }}
+                </div>
+              {% endif %}
+              <div class="form-group">
+                  <input type="text" class="form-control" name="hostname" placeholder="Host Name" required="required">
+              </div>
+              <div class="form-group">
+                  <input type="text" class="form-control" name="dbname" placeholder="Database Name" required="required">
+              </div>
+              <div class="form-group">
+                  <input type="text" class="form-control" name="username" placeholder="Username" required="required">
+              </div>
+              <div class="form-group">
+                  <input type="password" class="form-control" name="password" placeholder="Password" required="required">
+              </div>
+              <div class="form-group">
+                  <button type="submit" class="btn btn-primary btn-block">Log in</button>
+              </div>    
+              <div class="form-group">
+                  <button type="reset" class="btn btn-danger btn-block">Reset</button>
+              </div>   
+          </form>
+        </div>
     </div>
 </div>
 </div>
