@@ -2,11 +2,11 @@
 {% block title %}ABC Media{% endblock %}
 {% block content %}
 <div class="container">
-  <div class="row">
-    <div class="col-md-12">
+  <div class="row m-5">
+    <div class="col-md-12 d-flex justify-content-center">
         <div class="login-form mx-5">
           <form action="/" method="post">
-              <h2 class="text-center p-3">Database Log in</h2>
+              <h2 class="text-center p-3">Database Credentials</h2>
               {% if msg is defined %}
                 <div class="alert alert-danger" role="alert">
                   {{ msg }}
