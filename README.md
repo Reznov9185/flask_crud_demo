@@ -11,7 +11,9 @@ Build on top a web micro-framwork `Flask`
 ### Run (Bash)
 
 *-> Pre-requisites*
-
+```sh
+cd flask_crud_demo
+```
 ```sh
 python3 -m venv venv
 ```
@@ -37,3 +39,4 @@ export FLASK_RUN_PORT=your_desired_port
 ```sh
 flask run
 ```
+--> Go to http://localhost:5000 default port: `5000`, if you choose other port please enter that like, `localhost:your_desired_port`

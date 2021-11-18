@@ -34,7 +34,6 @@ def login():
                                     user=request.form["username"],
                                     password=request.form["password"],
                                     database=request.form["dbname"])
-        print(cnx)
         if cnx.is_connected():
             session["hostname"] = request.form["hostname"]
             session["username"] = request.form["username"]
@@ -45,7 +44,7 @@ def login():
         return render_template("index.html", msg= "")
     except mysql.connector.Error as err:
         error_msg = "Something went wrong: {}".format(err)
-        return render_template("index.html", msg= error_msg)
+        return render_template("index.html", error_msg= error_msg)
 
 @app.route("/home")
 def home():
@@ -55,9 +54,62 @@ def home():
         query = ("select * from DigitalDisplay")
         cursor.execute(query)
         res = cursor.fetchall()
-        return render_template("home.html", digital_displays = res)
+        if not (request.args.get("success_msg") is None):
+            return render_template("home.html", digital_displays = res, success_msg= request.args.get("success_msg"))
+        else:
+            return render_template("home.html", digital_displays = res)
     error_msg = "Something went wrong: {}".format("got disconnected!")
-    return render_template("index.html", msg= "")
+    return render_template("index.html", error_msg= error_msg)
+
+@app.route("/create-display")
+def create_display():
+    cnx = db_connect()
+    if not (cnx is None) and cnx.is_connected():
+        return render_template("create_display.html")
+    return redirect(url_for("home"))
+
+@app.route("/save-display", methods=["POST"])
+def save_display():
+    try:
+        cnx = db_connect()
+        if not (cnx is None) and cnx.is_connected():
+            cursor = cnx.cursor(buffered=True)
+            find_model_query = ("select count(*) from Model where modelNo = %s;")
+            modelNoVal = (request.form["modelNo"], )
+            cursor.execute(find_model_query, modelNoVal)
+            resModelNoCount = cursor.fetchall()
+            if int(list(resModelNoCount)[0][0]) == 0:
+                return render_template("create_display.html", error_msg= "Model Doesn't Exist! Please create a Model first.")
+            query = ("INSERT INTO DigitalDisplay (serialNo, schedulerSystem, modelNo) VALUES (%s, %s, %s);")
+            vals = (request.form["serialNo"], request.form["schedulerSystem"], request.form["modelNo"])
+            cursor.execute(query, vals)
+            cnx.commit()
+            return redirect(url_for("home", success_msg= "Digital Display Created Successfully!"))
+    except mysql.connector.Error as err:
+        error_msg = "Something went wrong: {}".format(err)
+        return render_template("create_display.html", error_msg= error_msg)
+
+@app.route("/create-model")
+def create_model():
+    cnx = db_connect()
+    if not (cnx is None) and cnx.is_connected():
+        return render_template("create_model.html")
+    return redirect(url_for("home"))
+
+@app.route("/save-model", methods=["POST"])
+def save_model():
+    try:
+        cnx = db_connect()
+        if not (cnx is None) and cnx.is_connected():
+            cursor = cnx.cursor(buffered=True)
+            query = ("INSERT INTO Model (modelNo, width, height, weight, depth, screenSize) VALUES (%s, %s, %s, %s, %s, %s);")
+            vals = (request.form["modelNo"], request.form["width"], request.form["height"], request.form["weight"], request.form["depth"], request.form["screenSize"])
+            cursor.execute(query, vals)
+            cnx.commit()
+            return render_template("create_display.html", success_msg= "Model Created Successfully!")
+    except mysql.connector.Error as err:
+        error_msg = "Something went wrong: {}".format(err)
+        return render_template("create_model.html", error_msg= error_msg)
 
 @app.route("/model/<modelNo>")
 def model_index(modelNo):
@@ -70,7 +122,7 @@ def model_index(modelNo):
         res = cursor.fetchall()
         return render_template("model.html", model_detail = res)
     error_msg = "Something went wrong: {}".format("got disconnected!")
-    return render_template("index.html", msg= "")
+    return render_template("index.html", success_msg= "")
 
 @app.route("/search-displays")
 def search_displays():
@@ -87,11 +139,11 @@ def search_result():
         res = cursor.fetchall()
         return render_template("found_displays.html", digital_displays = res)
     error_msg = "Something went wrong: {}".format("got disconnected!")
-    return render_template("index.html", msg= "")
+    return render_template("index.html", success_msg= "")
 
 @app.route("/logout", methods=["POST"])
 def logout():
     cnx = db_connect()
     if not (cnx is None) and cnx.is_connected():
         session.clear()
-        return render_template("index.html", msg= "Successfully logged out.")
+        return render_template("index.html", success_msg= "Successfully logged out.")

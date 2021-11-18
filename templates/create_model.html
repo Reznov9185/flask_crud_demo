@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}ABC Media{% endblock %}
+{% block content %}
+{% include "nav.html" %}
+<div class="container">
+  <div class="row m-5">
+    <div class="col-md-12 d-flex justify-content-center">
+        <div class="login-form mx-5">
+          <form action="{{ url_for('save_model') }}" method="post">
+              <h2 class="text-center p-3">New Model</h2>
+              {% if msg is defined %}
+                <div class="alert alert-danger" role="alert">
+                  {{ msg }}
+                </div>
+              {% endif %}
+              <div class="form-group">
+                  <input type="text" class="form-control" name="modelNo" placeholder="Model No." required="required">
+              </div>
+              <div class="form-group">
+                  <input type="text" class="form-control" name="width" placeholder="Width" required="required">
+              </div>
+              <div class="form-group">
+                  <input type="text" class="form-control" name="height" placeholder="Height" required="required">
+              </div>
+              <div class="form-group">
+                  <input type="text" class="form-control" name="depth" placeholder="Depth" required="required">
+              </div>
+              <div class="form-group">
+                  <input type="text" class="form-control" name="weight" placeholder="Weight" required="required">
+              </div>
+              <div class="form-group">
+                  <input type="text" class="form-control" name="screenSize" placeholder="Screen Size" required="required">
+              </div>
+              <div class="form-group">
+                  <button type="submit" class="btn btn-primary btn-block">Save Model</button>
+              </div>
+              <div class="form-group">
+                  <button type="reset" class="btn btn-danger btn-block">Reset</button>
+              </div> 
+          </form>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}
