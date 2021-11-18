@@ -6,7 +6,13 @@
     <div class="collapse navbar-collapse justify-content-end" id="navbarColor01">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('search_displays') }}">Search (Digital Displays) <span class="sr-only"></span></a>
+                <a class="nav-link" href="{{ url_for('search_displays') }}">Search (Digital Displays) <span class="sr-only"></span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('create_display') }}">Create Digital Display <span class="sr-only"></span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('create_model') }}">Create Model<span class="sr-only"></span></a>
             </li>
         </ul>
         <form action="/logout" method="post">
