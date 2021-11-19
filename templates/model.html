@@ -16,9 +16,14 @@
   <div class="row">
     <div class="col-md-12">
         <div class="home-page mx-5">
-            {% if msg is defined %}
-                <div class="alert alert-danger" role="alert">
-                {{ msg }}
+            {% if success_msg is defined %}
+                <div class="alert alert-success m-3" role="alert">
+                {{ success_msg }}
+                </div>
+            {% endif %}
+            {% if error_msg is defined %}
+                <div class="alert alert-danger m-3" role="alert">
+                {{ error_msg }}
                 </div>
             {% endif %}
             {% if model_detail is defined %}
