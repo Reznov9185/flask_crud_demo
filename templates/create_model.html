@@ -8,11 +8,16 @@
         <div class="login-form mx-5">
           <form action="{{ url_for('save_model') }}" method="post">
               <h2 class="text-center p-3">New Model</h2>
-              {% if msg is defined %}
-                <div class="alert alert-danger" role="alert">
-                  {{ msg }}
-                </div>
-              {% endif %}
+                {% if success_msg is defined %}
+                    <div class="alert alert-success m-3" role="alert">
+                    {{ success_msg }}
+                    </div>
+                {% endif %}
+                {% if error_msg is defined %}
+                    <div class="alert alert-danger m-3" role="alert">
+                    {{ error_msg }}
+                    </div>
+                {% endif %}
               <div class="form-group">
                   <input type="text" class="form-control" name="modelNo" placeholder="Model No." required="required">
               </div>

@@ -6,8 +6,8 @@
   <div class="row m-5">
     <div class="col-md-12 d-flex justify-content-center">
         <div class="login-form mx-5">
-          <form action="{{ url_for('save_display') }}" method="post">
-              <h2 class="text-center p-3">New Digital Display</h2>
+          <form action="{{ url_for('update_display') }}" method="post">
+              <h2 class="text-center p-3">Update Digital Display</h2>
               {% if success_msg is defined %}
                 <div class="alert alert-success" role="alert">
                   {{ success_msg }}
@@ -19,16 +19,19 @@
                 </div>
               {% endif %}
               <div class="form-group">
-                  <input type="text" class="form-control" name="serialNo" placeholder="Serial No." required="required">
+                  <input type="text" class="form-control" name="serialNo" placeholder="Serial No." 
+                    required="required" value={{ digital_display[0][0] }}>
               </div>
               <div class="form-group">
-                  <input type="text" class="form-control" name="schedulerSystem" placeholder="Scheduler System" required="required">
+                  <input type="text" class="form-control" name="schedulerSystem" 
+                    placeholder="Scheduler System" required="required" value={{ digital_display[0][1] }}>
               </div>
               <div class="form-group">
-                  <input type="text" class="form-control" name="modelNo" placeholder="Model No." required="required">
+                  <input type="text" class="form-control" name="modelNo" placeholder="Model No." 
+                    required="required" value={{ digital_display[0][2] }}>
               </div>
               <div class="form-group">
-                  <button type="submit" class="btn btn-primary btn-block">Create Display</button>
+                  <button type="submit" class="btn btn-primary btn-block">Update Display</button>
               </div>
               <div class="form-group">
                   <button type="reset" class="btn btn-danger btn-block">Reset</button>
