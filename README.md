@@ -29,7 +29,7 @@ pip install -r requirements.txt
 export FLASK_ENV=development
 ```
 
-To run on a desired port:
+To run on a desired port: ( Optional, if you have something already running on port `5000` )
 
 ```sh
 export FLASK_RUN_PORT=your_desired_port
