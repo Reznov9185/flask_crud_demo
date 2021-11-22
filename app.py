@@ -144,7 +144,7 @@ def update_display():
                 return redirect(url_for("edit_display", serialNo=request.form["serialNo"], 
                     error_msg = "Model Doesn't Exist! Please create a Model first."))
             query = ("update DigitalDisplay set serialNo = %s, schedulerSystem = %s, modelNo = %s where serialNo = %s;")
-            vals = (request.form["serialNo"], request.form["schedulerSystem"], request.form["modelNo"], request.form["serialNo"])
+            vals = (request.form["serialNo"], request.form["schedulerSystem"], request.form["modelNo"], request.form["oldserialNo"])
             cursor.execute(query, vals)
             cnx.commit()
             return redirect(url_for("home", success_msg = "Digital Display Updated Successfully!"))
